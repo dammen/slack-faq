@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+   <head>
+         <meta charset="UTF-8">
+         <link rel="stylesheet" href="/static/stylesheets/welcome-template.css">
+         <!-- The welcome struct (shown in the main.go code) is received within the HTML and we just need to use the . operator and retrieve the information we want -->
+         <title>Welcome {{.Name}}</title>
+   </head>
+   <body>
+      <div class="welcome ">Todays question in the Netlight workspace are:<br><br></div>
+      <div class="messageList", id="channelsWrapper"></div>
+      <script src="https://unpkg.com/react@16.4.1/umd/react.production.min.js"></script>
+      <script src="https://unpkg.com/react-dom@16.4.1/umd/react-dom.production.min.js"></script>
+      <script>
+         var channels = {{.Messages}}
+         channels = JSON.parse(channels)
+         for (const [topic, messages] of Object.entries(channels)) {
+            messagesAsArray = messages.split("/\n/")
+            var header = document.createElement("h3")
+            header.setAttribute("class", "topic")
+            var h = document.createTextNode(topic);
+            header.appendChild(h);
+            var ul = document.createElement("ul")
+            ul.setAttribute("class", "messagelist")
+            ul.setAttribute("id", topic)
+            for (index in messagesAsArray){
+               var li = document.createElement("li");
+               li.setAttribute("class", "message")
+               li.setAttribute("id", index)
+               var t = document.createTextNode(messagesAsArray[index]);
+               li.appendChild(t);
+               ul.appendChild(li)
+            }
+            document.getElementById("channelsWrapper").appendChild(header);
+            document.getElementById("channelsWrapper").appendChild(ul);
+         }
+         
+      </script>
+   </body>
+</html>
