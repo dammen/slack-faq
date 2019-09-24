@@ -1,1 +1,4 @@
 *.json
+slafaq
+view/node_modules/*
+litterature.txt
